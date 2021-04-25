@@ -1,7 +1,7 @@
 const messages = require("./messages")
 
 /**
-    * Takes a screenshot of a DOM element on the page, with optional padding.
+    * Takes a screenshot of a DOM element on the page
     *
     * @param {!{path:string, selector:string, padding:(number|undefined)}=} opts
     * @return {!Promise<!Buffer>}

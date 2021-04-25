@@ -1,5 +1,4 @@
-var cloudinary = require('cloudinary').v2;
-
+const cloudinary = require('cloudinary').v2;
 
 module.exports = {
     uploadToCloudinary: async (image, format) => {
@@ -7,7 +6,7 @@ module.exports = {
             cloudinary.uploader.upload_stream({ folder: "container", format }, (err, url) => {
                 if (err) return reject(err);
                 return resolve(url);
-            }).end(Buffer.from(image, 'base64'))
+            }).end(image)
         });
     },
 }

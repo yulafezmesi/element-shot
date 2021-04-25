@@ -1,71 +1,12 @@
 
 require('dotenv').config();
 const express = require('express')
-const puppeteer = require('puppeteer');
-const { screenshotDOMElement, queryParamsHandler } = require('./utils/index')
-const { uploadToCloudinary } = require('./services/cloudinary')
 const app = express()
-const port = 3000
+const indexRouter = require('./routes/index')
 
-app.listen(port, () => {
-    console.log(`Example app listening at http://localhost:${port}`)
-})
+app.use("/api", indexRouter);
 
-/**
-* @api {get} /api Get Screenshot from element
-* @apiName Screenshot
-*
-* @apiParam  {String} [url] Url
-* @apiParam  {String} [selector] Selector
-* @apiParam  {Number} [width(default: 1000)] Screenshot width
-* @apiParam  {Number} [height(default: 600)] Screenshot height
-* @apiParam  {Number} [padding(default: 0)] Padding for screenshot
-* @apiParam  {String} [format(default: png)] Screenshot return format. Available png || jpeg
-*
-*/
+app.use('/', express.static(__dirname + '/public'));
 
-app.get('/', async (req, res, next) => {
-
-    const { error, message, params } = queryParamsHandler(req.query);
-
-    if (error) {
-        return res.status(500).send({
-            error: true,
-            message
-        })
-    }
-
-    try {
-        const browser = await puppeteer.launch();
-        const page = await browser.newPage();
-        // Adjustments particular to this page to ensure we hit desktop breakpoint.
-        page.setViewport({ width: params.width, height: params.height, deviceScaleFactor: 1 });
-
-        await page.goto(params.url, { waitUntil: 'networkidle2' });
-
-        const image = await screenshotDOMElement({
-            selector: params.selector,
-            isCloudUpload: params.isCloudUpload,
-            selectorToBeDeleted: params.selectorToBeDeleted,
-            padding: 0,
-        }, page);
-
-        const data = params.isCloudUpload ? await uploadToCloudinary(image, params.format) : image
-
-        res.send({
-            success: true,
-            data
-        })
-            
-        browser.close();
-
-    } catch (e) {
-        next(e)
-    }
-})
-
-
-
-
-
+app.listen(process.env.PORT || 3000)
 
