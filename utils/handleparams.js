@@ -5,7 +5,7 @@ const parseBoolean = require('./parseboolean');
 
 module.exports = (params) => {
 
-    const { url, selector, width = 1000, height = 600, format = "png", padding = 0, isCloudUpload = false, selectorToBeDeleted = '' } = params
+    const { url, selector, width = 1366, height = 768, format = "png", padding = 0, isCloudUpload = false, selectorToBeDeleted = '' } = params
 
     params.isCloudUpload = parseBoolean(params.isCloudUpload)
 

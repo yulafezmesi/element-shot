@@ -1,0 +1,13 @@
+/* ./src/index.css */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+.language-javascript {
+    white-space: break-spaces !important;
+}
+
+pre {
+    border-radius: 10px;
+}

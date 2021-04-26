@@ -11,8 +11,8 @@ const indexRoute = express.Router();
 *
 * @apiParam  {String} [url] Url
 * @apiParam  {String} [selector] Selector
-* @apiParam  {Number} [width(default: 1000)] Screenshot width
-* @apiParam  {Number} [height(default: 600)] Screenshot height
+* @apiParam  {Number} [width(default: 1366)] Screenshot width
+* @apiParam  {Number} [height(default: 768)] Screenshot height
 * @apiParam  {Number} [padding(default: 0)] Padding for screenshot
 * @apiParam  {String} [format(default: png)] Screenshot return format. Available png || jpeg
 *
@@ -33,7 +33,7 @@ indexRoute.get('/', async (req, res, next) => {
         const browser = await puppeteer.launch();
         const page = await browser.newPage();
         // Adjustments particular to this page to ensure we hit desktop breakpoint.
-        page.setViewport({ width: params.width, height: params.height, deviceScaleFactor: 1 });
+        page.setViewport({ width: +params.width, height: +params.height, deviceScaleFactor: 1 });
 
         await page.goto(params.url, { waitUntil: 'networkidle2' });
 
