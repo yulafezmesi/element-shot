@@ -30,7 +30,9 @@ indexRoute.get('/', async (req, res) => {
     }
 
     try {
-        const browser = await puppeteer.launch();
+        const browser = await puppeteer.launch({
+            args: ["--no-sandbox", "--disabled-setupid-sandbox"],
+        });
         const page = await browser.newPage();
         // Adjustments particular to this page to ensure we hit desktop breakpoint.
         page.setViewport({ width: +params.width, height: +params.height, deviceScaleFactor: 1 });
