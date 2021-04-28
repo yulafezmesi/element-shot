@@ -30,8 +30,9 @@ indexRoute.get('/', async (req, res) => {
     }
 
     try {
+        console.log(process.platform)
         const browser = await puppeteer.launch({
-            args: ["--no-sandbox", "--disabled-setupid-sandbox"],
+            executablePath: '/usr/bin/chromium-browser'
         });
         const page = await browser.newPage();
         // Adjustments particular to this page to ensure we hit desktop breakpoint.
