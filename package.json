@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "description": "Get screenshot from DOM elements",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon",
