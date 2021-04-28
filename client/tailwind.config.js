@@ -4,8 +4,13 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      colors: {
+        blue: {
+          default: "#1976d2"
+        }
+      },
       gridTemplateColumns: {
-        'editor': 'minmax(200px, 310px) 1fr 1fr',
+        'editor': 'minmax(200px, 310px) 1fr',
       }
     },
   },

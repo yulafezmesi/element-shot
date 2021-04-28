@@ -5,7 +5,7 @@ const parseBoolean = require('./parseboolean');
 
 module.exports = (params) => {
 
-    const { url, selector, width = 1366, height = 768, format = "png", padding = 0, isCloudUpload = false, selectorToBeDeleted = '' } = params
+    const { url, selector, width = 1366, height = 768, format = "png", padding = 0, selectorToBeDeleted = '' } = params
 
     params.isCloudUpload = parseBoolean(params.isCloudUpload)
 
@@ -23,10 +23,16 @@ module.exports = (params) => {
             message: messages.VALIDATION_URL_MESSAGE
         }
     }
-    if (format !== "png" || format !== "png") {
+    if (!(format === "png" || format === "jpeg")) {
         return {
             error: true,
             message: messages.VALIDATION_FORMAT_MESSAGE
+        }
+    }
+    if (isNaN(+width) || isNaN(+height)) {
+        return {
+            error: true,
+            message: messages.VALIDATION_NAN_MESSAGE
         }
     }
     return {
@@ -35,11 +41,11 @@ module.exports = (params) => {
         params: {
             url,
             selector,
-            width,
-            height,
+            width: +width,
+            height: + height,
             format,
             padding,
-            isCloudUpload,
+            isCloudUpload: params.isCloudUpload,
             selectorToBeDeleted
         }
     }

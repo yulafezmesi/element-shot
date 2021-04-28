@@ -17,13 +17,13 @@ module.exports = async (opts = {}, page) => {
         if (!element)
             return {
                 error: true,
-                message: messages.ELEMENT_NOTFOUND_MESSAGE
+                message: `${messages.ELEMENT_NOTFOUND_MESSAGE} ${selector}`
             };
         if (selectorToBeDeleted) {
             const elementToBeDeleted = document.querySelector(selectorToBeDeleted)
             if (!elementToBeDeleted) return {
                 error: true,
-                message: messages.DELETED_ELEMENT_NOTFOUND_MESSAGE
+                message: `${messages.ELEMENT_NOTFOUND_MESSAGE} ${selectorToBeDeleted}`
             };
             elementToBeDeleted ? elementToBeDeleted.remove() : null
         }
@@ -33,7 +33,6 @@ module.exports = async (opts = {}, page) => {
 
     if (rect.error)
         throw Error(rect.message);
-
     return await page.screenshot({
         type,
         encoding: isCloudUpload ? "binary" : "base64",

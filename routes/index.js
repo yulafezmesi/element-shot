@@ -18,7 +18,7 @@ const indexRoute = express.Router();
 *
 */
 
-indexRoute.get('/', async (req, res, next) => {
+indexRoute.get('/', async (req, res) => {
 
     const { error, message, params } = queryParamsHandler(req.query);
 
@@ -41,7 +41,7 @@ indexRoute.get('/', async (req, res, next) => {
             selector: params.selector,
             isCloudUpload: params.isCloudUpload,
             selectorToBeDeleted: params.selectorToBeDeleted,
-            padding: 0,
+            padding: params.padding,
         }, page);
 
         const data = params.isCloudUpload ? await uploadToCloudinary(image, params.format) : image
@@ -54,7 +54,7 @@ indexRoute.get('/', async (req, res, next) => {
         browser.close();
 
     } catch (e) {
-        next(e)
+        res.status(500).send({ success: false, message: e.message })
     }
 })
 

@@ -5,6 +5,7 @@ const app = express()
 const indexRouter = require('./routes/index')
 
 app.use("/api", indexRouter);
+app.use(express.json());
 
 app.use('/', express.static(__dirname + '/public'));
 
