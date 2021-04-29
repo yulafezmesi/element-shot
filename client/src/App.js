@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from 'react'
 import { useToasts } from 'react-toast-notifications';
-import GithubImg from './static/github-mark.png'
-import { CopyIcon } from './components/icons'
+import { CopyIcon, GithubIcon } from './components/icons'
 import axios from 'axios'
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { tomorrowNightEighties } from 'react-syntax-highlighter/dist/esm/styles/hljs';
@@ -61,12 +60,9 @@ function App() {
 
   return (
     <div className="container mx-auto">
-      <header className="border-gray-300 border-solid border-b py-2 flex justify-between">
-        <h1 className="font-semibold">Container Shot</h1>
-        <a rel="noreferrer" target="_blank" href="https://github.com/yulafezmesi/element-shot">
-          <img width="25" height="25" src={GithubImg}></img>
-        </a>
-      </header>
+      <a className="btn-github" rel="noopener" target="_blank" aria-label="View source on GitHub" href="https://github.com/yulafezmesi/element-shot">
+        <GithubIcon />
+      </a>
       <div className="grid grid-cols-editor gap-3 py-4">
         <form onSubmit={handleSubmit} className="space-y-4 text-gray-700">
           <div className="flex flex-wrap">
@@ -135,7 +131,7 @@ function App() {
             </SyntaxHighlighter>
           </div>
           <div className="relative json-snipped grid">
-            <span onClick={() => copyToClipboard(data)} title="Copy to clipboard" role="button" className="absolute right-5 top-1" >
+            <span onClick={() => copyToClipboard(JSON.stringify(data, null, 4))} title="Copy to clipboard" role="button" className="absolute right-5 top-1" >
               <CopyIcon />
             </span>
             <SyntaxHighlighter
@@ -144,7 +140,9 @@ function App() {
             </SyntaxHighlighter>
           </div>
           <section className="image-wrapper">
-            <img src={data?.data?.url ? data.data.url : `data:image/${URLparams.format}; base64, ${data?.data}`}></img>
+            {data.success &&
+              <img src={data?.data?.url ? data.data.url : `data:image/${URLparams.format}; base64, ${data?.data}`}></img>
+            }
           </section>
         </div>
       </div>
